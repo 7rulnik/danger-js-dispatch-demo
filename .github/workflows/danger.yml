@@ -1,24 +1,29 @@
 name: Repository Dispatch
 on:
   repository_dispatch:
-    types: [my-event]
+    types: [danger-js]
 jobs:
   myEvent:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: Use Node.js 10.x
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.client_payload.ref }}
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install -g yarn
       - run: yarn install  --frozen-lockfile
-      - run: cat $GITHUB_EVENT_PATH
+      - name: Get PR number for branch
+        id: pr-id-for-branch
+        run: |
+          prIdForBranch=$(gh pr view ${{ github.event.client_payload.ref }} --json number --jq .number)
+          echo "PR_ID_FOR_BRANCH=$prIdForBranch" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Danger
         run: yarn danger ci
         env:
-          DEBUG: "*"
           DANGER_MANUAL_CI: true
           DANGER_MANUAL_GH_REPO: ${{ github.repository }}
-          DANGER_MANUAL_PR_NUM: 3
+          DANGER_MANUAL_PR_NUM: ${{ steps.pr-id-for-branch.outputs.PR_ID_FOR_BRANCH }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
