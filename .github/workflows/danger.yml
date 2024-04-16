@@ -17,4 +17,7 @@ jobs:
       - name: Danger
         run: yarn danger ci
         env:
+          DANGER_MANUAL_CI: true
+          DANGER_MANUAL_GH_REPO: ${{ github.repository }}
+          DANGER_MANUAL_PR: 3
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
