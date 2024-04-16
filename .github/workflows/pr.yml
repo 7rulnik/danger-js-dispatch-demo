@@ -1,4 +1,4 @@
-name: Repository Dispatch
+name: Open PRs
 on:
   pull_request:
     types: [opened]
@@ -15,5 +15,5 @@ jobs:
       - run: yarn install  --frozen-lockfile
       - run: cat $GITHUB_EVENT_PATH
       - run: yarn danger ci
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
