@@ -20,5 +20,5 @@ jobs:
           DEBUG: "*"
           DANGER_MANUAL_CI: true
           DANGER_MANUAL_GH_REPO: ${{ github.repository }}
-          DANGER_MANUAL_PR: 3
+          DANGER_MANUAL_PR_NUM: 3
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
