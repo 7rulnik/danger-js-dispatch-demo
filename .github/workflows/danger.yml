@@ -13,6 +13,7 @@ jobs:
           node-version: 20
       - run: npm install -g yarn
       - run: yarn install  --frozen-lockfile
+      - run: cat $GITHUB_EVENT_PATH
       - run: yarn danger ci
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
