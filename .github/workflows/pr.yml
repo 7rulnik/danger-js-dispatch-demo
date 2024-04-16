@@ -1,0 +1,19 @@
+name: Repository Dispatch
+on:
+  pull_request:
+    types: [opened]
+jobs:
+  myEvent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 20
+      - run: npm install -g yarn
+      - run: yarn install  --frozen-lockfile
+      - run: cat $GITHUB_EVENT_PATH
+      - run: yarn danger ci
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
