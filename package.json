@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "danger": "^12.0.1"
+  }
+}
