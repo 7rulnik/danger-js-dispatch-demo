@@ -14,6 +14,9 @@ jobs:
       - run: npm install -g yarn
       - run: yarn install  --frozen-lockfile
       - run: cat $GITHUB_EVENT_PATH
+      - run: gh auth status
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Danger
         run: yarn danger ci
         env:
